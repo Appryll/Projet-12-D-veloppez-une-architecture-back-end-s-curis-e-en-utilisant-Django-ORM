@@ -37,6 +37,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'comptes.apps.ComptesConfig',
+    'contrat.apps.ContratConfig',
+    'event.apps.EventConfig',
+
 ]
 
 MIDDLEWARE = [
@@ -75,8 +80,12 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql', # on utilise l'adaptateur postgresql
+        'NAME': 'EpicEvents', # le nom de notre base de donnees creee
+        'USER': 'postgres', 
+        'PASSWORD': 'MotPgSqlPasse',
+        'HOST': '',
+        'PORT': '5432',
     }
 }
 
