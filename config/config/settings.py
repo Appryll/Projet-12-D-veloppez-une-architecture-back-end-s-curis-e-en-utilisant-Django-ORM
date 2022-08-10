@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
+from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -38,10 +39,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    # 'rest_framework.authtoken',
     'comptes.apps.ComptesConfig',
     'contrat.apps.ContratConfig',
     'event.apps.EventConfig',
-
 ]
 
 MIDDLEWARE = [
@@ -84,7 +85,7 @@ DATABASES = {
         'NAME': 'EpicEvents', # le nom de notre base de donnees creee
         'USER': 'postgres', 
         'PASSWORD': 'MotPgSqlPasse',
-        'HOST': '',
+        'HOST': 'localhost',
         'PORT': '5432',
     }
 }
@@ -114,7 +115,9 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+DEBUG = True
+
+TIME_ZONE = 'Europe/Paris'
 
 USE_I18N = True
 
@@ -130,3 +133,10 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+AUTH_USER_MODEL = 'comptes.User'
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(hours=10),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
+}
