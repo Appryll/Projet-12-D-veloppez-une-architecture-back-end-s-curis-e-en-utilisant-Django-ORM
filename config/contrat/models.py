@@ -19,7 +19,7 @@ class Contrat(models.Model):
                      Contact commercial : {self.sales_contact_id.last_name}' 
      
     class Meta:
-        ordering = ['date_created']
+        ordering = ['-date_created']
         db_table = 'Contrat'
         verbose_name = 'Contrat'
         verbose_name_plural = 'Contrats'

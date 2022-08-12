@@ -23,7 +23,8 @@ class Event(models.Model):
                     Contact de support : {self.support_contact_id.last_name}' 
         
     class Meta:
-        ordering = ['date_created']
+        ordering = ['-date_created']
         db_table = 'Event'
         verbose_name = 'Event'
         verbose_name_plural = 'Events'
+## VER DATA Y ESTADO DEL EVENTO

@@ -6,12 +6,14 @@ class User(AbstractUser):
     pass
 
 class Sales(User):
+    is_sales = models.BooleanField(default=True)
     class Meta:
         ordering=['last_name']
         db_table = 'Sales'
         verbose_name = 'Sales'
 
 class Support(User):
+    is_support = models.BooleanField(default=True)
     class Meta:
         ordering=['last_name']
         db_table = 'Support'
