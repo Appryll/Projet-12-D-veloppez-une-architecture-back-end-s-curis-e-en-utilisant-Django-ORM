@@ -28,7 +28,7 @@ class Client(models.Model):
     company_name = models.CharField(max_length=250, verbose_name='Entreprise')
     date_created = models.DateTimeField(auto_now_add=True, verbose_name='Date de creation')
     date_updated = models.DateTimeField(auto_now_add=True, verbose_name='Date de modification')
-    sales_contact = models.ForeignKey(to=settings.AUTH_USER_MODEL, max_length=255, null=True, blank=True, on_delete=models.CASCADE, verbose_name='ID Sales')
+    sales_contact = models.ForeignKey(to=settings.AUTH_USER_MODEL, max_length=255, on_delete=models.CASCADE, verbose_name='ID Sales')
     client_confirmed = models.BooleanField(default=False)
     
     def __str__(self):
