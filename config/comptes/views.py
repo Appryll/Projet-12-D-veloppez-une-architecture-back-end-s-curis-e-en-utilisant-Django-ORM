@@ -1,10 +1,10 @@
 from django.shortcuts import render
-from .serializers import ClientSerializer, SalesSerializer, SupportSerializer
-from .models import Client, Sales, Support
-from .permissions import IsSalesPermissions
+from .serializers import ClientSerializer, UserSerializer
+from .models import Client, User
+from .permissions import IsAdminAuthenticated, IsSalesAuthenticated
 
 from rest_framework import viewsets, filters
-from rest_framework.permissions import IsAuthenticated, IsAdminUser 
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.pagination import PageNumberPagination
 
 from django_filters.rest_framework import DjangoFilterBackend, FilterSet
@@ -18,21 +18,15 @@ class ClientFilter(FilterSet):
 class ClientList(viewsets.ModelViewSet):
     serializer_class = ClientSerializer
     queryset = Client.objects.all()
-    # permission_classes = [IsAuthenticated|IsAdminUser|IsSalesPermissions]
+    # permission_classes = [IsAdminAuthenticated|IsSalesAuthenticated]
     pagination_class = PageNumberPagination
     filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
     # search_fields = ('last_name', 'email', 'company_name', 'sales_contact')
     ordering_fields = ('last_name', 'date_created')
     filterset_class = ClientFilter
 
-class SalesList(viewsets.ModelViewSet):
-    serializer_class = SalesSerializer
-    queryset = Sales.objects.all()
-    # permission_classes = [IsAuthenticated|IsAdminUser]
-    pagination_class = PageNumberPagination
-
-class SupportList(viewsets.ModelViewSet):
-    serializer_class = SupportSerializer
-    queryset = Support.objects.all()
-    # permission_classes = [IsAuthenticated|IsAdminUser]
+class UserList(viewsets.ModelViewSet):
+    serializer_class = UserSerializer
+    queryset = User.objects.all()
+    # permission_classes = [IsAdminAuthenticated]
     pagination_class = PageNumberPagination

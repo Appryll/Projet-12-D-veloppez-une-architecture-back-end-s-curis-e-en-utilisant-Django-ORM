@@ -1,5 +1,6 @@
 from django.db import models
-from comptes.models import Support, Client
+from comptes.models import Client
+from django.conf import settings
 
 class Event(models.Model):
     PROCES = 'En procès'
@@ -9,7 +10,7 @@ class Event(models.Model):
         (PROCES, 'En procès'),
         (FINALISE, 'Finalisé'),]
 
-    support_contact_id = models.ForeignKey(to=Support, on_delete=models.PROTECT, verbose_name='Contact de support')
+    support_contact_id = models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.PROTECT, verbose_name='Contact de support')
     client_id = models.ForeignKey(to=Client, on_delete=models.PROTECT, verbose_name='Nom prenom Client')
     date_created = models.DateTimeField(auto_now_add=True, verbose_name='Date de creation')
     date_updated = models.DateTimeField(auto_now_add=True, verbose_name='Date de modification')

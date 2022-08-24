@@ -1,8 +1,9 @@
 from django.db import models
-from comptes.models import Sales, Client
+from comptes.models import Client, User, User
+from django.conf import settings
 
 class Contrat(models.Model):
-    sales_contact_id = models.ForeignKey(to=Sales, on_delete=models.PROTECT)
+    sales_contact_id = models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
     client_id = models.ForeignKey(to=Client, on_delete=models.PROTECT)
     date_created = models.DateTimeField(auto_now_add=True, verbose_name='Date de creation')
     date_updated = models.DateTimeField(auto_now_add=True, verbose_name='Date de modification')

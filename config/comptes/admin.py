@@ -1,5 +1,6 @@
+from multiprocessing.connection import Client
 from django.contrib import admin
-from .models import Client, User, Support, Sales
+from .models import User, Client
 
 class ClientAdmin(admin.ModelAdmin):
     list_display=("first_name", "nom", "email", "mobile", "company_name", "date_created", "date_updated",
@@ -11,7 +12,5 @@ class ClientAdmin(admin.ModelAdmin):
     
 
 # Register your models here.
-admin.site.register(Client, ClientAdmin)
 admin.site.register(User)
-admin.site.register(Support)
-admin.site.register(Sales)
+admin.site.register(Client, ClientAdmin)
