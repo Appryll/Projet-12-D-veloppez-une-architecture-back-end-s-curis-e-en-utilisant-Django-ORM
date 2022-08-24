@@ -1,10 +1,10 @@
 from rest_framework.serializers import ModelSerializer
 from .models import Contrat
-from comptes.serializers import ClientSerializer, SalesSerializer
+from comptes.serializers import ClientSerializer, UserSerializer
  
 class ContratSerializer(ModelSerializer):
     client_id = ClientSerializer()
-    sales_contact_id = SalesSerializer()
+    sales_contact_id = UserSerializer()
 
     class Meta:
         model = Contrat

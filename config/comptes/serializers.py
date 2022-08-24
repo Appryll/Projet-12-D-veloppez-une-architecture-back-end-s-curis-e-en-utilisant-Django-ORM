@@ -1,20 +1,14 @@
 from rest_framework.serializers import ModelSerializer
-from .models import Client, Support, Sales
+from .models import Client, User
 
-class SupportSerializer(ModelSerializer):
+class UserSerializer(ModelSerializer):
     class Meta:
-        model = Support
-        fields = '__all__'
-
-class SalesSerializer(ModelSerializer):
-    class Meta:
-        model = Sales
+        model = User
         fields = '__all__'
 
 class ClientSerializer(ModelSerializer):
-    sales_contact = SalesSerializer()
-    
+    user = UserSerializer()
     class Meta:
         model = Client
         fields = ['first_name', 'last_name', 'email', 'phone', 'mobile', 'company_name', 'date_created', 
-        'date_updated', 'client_confirmed',  'sales_contact']
+        'date_updated', 'client_confirmed',  'user']

@@ -2,22 +2,37 @@ from django.db import models
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 
+SALES = 'SALES'
+SUPPORT = 'SUPPORT'
+
 class User(AbstractUser):
-    is_staff = models.BooleanField(default=False)
+    role = models.CharField(max_length=7,choices=[(SALES, SALES),(SUPPORT, SUPPORT)])
+    is_sales = models.BooleanField(default=False)
+    is_support = models.BooleanField(default=False)
 
-class Sales(User):
-    is_sales = models.BooleanField(default=True)
-    class Meta:
-        ordering=['last_name']
-        db_table = 'Sales'
-        verbose_name = 'Sales'
+    def __str__(self):
+        return f"{self.username}: ({self.role})"
 
-class Support(User):
-    is_support = models.BooleanField(default=True)
+    def save(self, *args, **kwargs):
+        if self.role == SALES:
+            self.is_sales = True
+            self.is_support = False
+        elif self.role == SUPPORT:
+            self.is_sales = False
+            self.is_support = True
+        else:
+            self.is_sales = False
+            self.is_support = False
+
+        user = super(User, self)
+        user.save()
+        return user
+        
     class Meta:
-        ordering=['last_name']
-        db_table = 'Support'
-        verbose_name = 'Support'
+        ordering=['username']
+        db_table = 'User'
+        verbose_name = 'User'
+        verbose_name_plural = 'Users'
 
 class Client(models.Model): 
     sales_contact = models.ForeignKey(to=settings.AUTH_USER_MODEL, max_length=255, on_delete=models.PROTECT, verbose_name='ID Sales')
