@@ -7,8 +7,8 @@ class UserSerializer(ModelSerializer):
         fields = '__all__'
 
 class ClientSerializer(ModelSerializer):
-    user = UserSerializer()
+    sales_contact = UserSerializer()
     class Meta:
         model = Client
         fields = ['first_name', 'last_name', 'email', 'phone', 'mobile', 'company_name', 'date_created', 
-        'date_updated', 'client_confirmed',  'user']
+        'date_updated', 'client_confirmed',  'sales_contact']

@@ -35,7 +35,8 @@ class User(AbstractUser):
         verbose_name_plural = 'Users'
 
 class Client(models.Model): 
-    sales_contact = models.ForeignKey(to=settings.AUTH_USER_MODEL, max_length=255, on_delete=models.PROTECT, verbose_name='ID Sales')
+    sales_contact = models.ForeignKey(to=settings.AUTH_USER_MODEL, max_length=255, on_delete=models.PROTECT, 
+    verbose_name='Username Contact Commercial')
     first_name = models.CharField(max_length=25, verbose_name='Prenom')
     last_name = models.CharField(max_length=25, verbose_name='Nom')
     email = models.EmailField(max_length=100)

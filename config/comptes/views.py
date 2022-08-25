@@ -21,7 +21,6 @@ class ClientList(viewsets.ModelViewSet):
     # permission_classes = [IsAdminAuthenticated|IsSalesAuthenticated]
     pagination_class = PageNumberPagination
     filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
-    # search_fields = ('last_name', 'email', 'company_name', 'sales_contact')
     ordering_fields = ('last_name', 'date_created')
     filterset_class = ClientFilter
 
