@@ -13,17 +13,7 @@ class ContratList(viewsets.ModelViewSet):
     queryset = Contrat.objects.all()
     # permission_classes = [IsAuthenticated]
     pagination_class = PageNumberPagination
-    filter_backends = (DjangoFilterBackend, filters.OrderingFilter)
+    filter_backends = (DjangoFilterBackend, filters.OrderingFilter, filters.SearchFilter)
     filterset_fields = ('date_created', 'amount',)
+    search_fields = ('client_id__last_name', 'client_id__email',)
     ordering_fields = ('date_created', 'amount',)
-
-    # def get_queryset(self):
-    #     """
-    #     Optionally restricts the returned purchases to a given user,
-    #     by filtering against a `username` query parameter in the URL.
-    #     """
-    #     queryset = Client.objects.all()
-    #     first_name = self.request.query_params.get('first_name')
-    #     if first_name is not None:
-    #         queryset = queryset.filter(client__first_name=first_name)
-    #     return queryset

@@ -3,10 +3,10 @@ from django.contrib import admin
 from .models import User, Client
 
 class ClientAdmin(admin.ModelAdmin):
-    list_display=("first_name", "nom", "email", "mobile", "company_name", "date_created", "date_updated",
+    list_display=("first_name", "nom", "email", "mobile", "entreprise", "date_created", "date_updated",
     "sales_contact", "client_confirmed")
     ordering=('-last_name',)
-    search_fields=("first_name", "last_name", "email", "company_name")
+    search_fields=("first_name", "last_name", "email", "entreprise")
 
     def nom(self, obj):
         return obj.last_name.upper()

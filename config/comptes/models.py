@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from django.utils.html import format_html
 from django.contrib.auth.models import AbstractUser
 
 SALES = 'SALES'
@@ -49,6 +50,12 @@ class Client(models.Model):
     
     def __str__(self):
         return f'{self.first_name} {self.last_name}' 
+
+    def entreprise(self):
+        if self.client_confirmed == False:
+            return format_html('<span style="color:red;">{0}</span>'.format(self.company_name))
+        else:
+            return format_html('<span style="color:#2fc12f; ">{0}</span>'.format(self.company_name))
     
     class Meta:
         ordering = ['last_name']

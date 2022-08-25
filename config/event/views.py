@@ -14,8 +14,5 @@ class EventList(viewsets.ModelViewSet):
     pagination_class = PageNumberPagination
     filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
     filterset_fields = ('event_date',)
+    search_fields = ('client_id__last_name', 'client_id__email',)
     ordering_fields = ('event_date', 'date_created')
-
-    # def get_queryset(self):
-    #     user_id = self.request.user
-    #     return Event.objects.filter(support_contact_id=user_id)
