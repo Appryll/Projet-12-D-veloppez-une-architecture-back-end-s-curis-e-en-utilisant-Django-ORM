@@ -11,7 +11,7 @@ class Event(models.Model):
         (FINALISE, 'Finalisé'),]
 
     support_contact_id = models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.PROTECT, verbose_name='Contact de support')
-    client_id = models.ForeignKey(to=Client, on_delete=models.PROTECT, verbose_name='Nom prenom Client')
+    client_id = models.ForeignKey(to=Client, on_delete=models.CASCADE, verbose_name='Nom prenom Client')
     date_created = models.DateTimeField(auto_now_add=True, verbose_name='Date de creation')
     date_updated = models.DateTimeField(auto_now_add=True, verbose_name='Date de modification')
     event_status = models.CharField(max_length=20, choices=EVENT_STATUS_CHOICES, default=PROCES)
