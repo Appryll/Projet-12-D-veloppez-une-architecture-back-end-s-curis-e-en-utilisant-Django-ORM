@@ -20,3 +20,4 @@ class ClientSerializer(ModelSerializer):
         model = Client
         fields = ['id','first_name', 'last_name', 'email', 'phone', 'mobile', 'company_name', 'date_created', 
         'date_updated', 'client_confirmed',  'sales_contact']
+        

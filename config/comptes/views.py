@@ -1,4 +1,3 @@
-from django.shortcuts import render
 from .serializers import ClientSerializer, UserSerializer
 from .models import Client, User
 from .permissions import IsAdminAuthenticated, IsSalesAuthenticated
@@ -29,3 +28,4 @@ class UserList(viewsets.ModelViewSet):
     queryset = User.objects.all()
     permission_classes = [IsAdminAuthenticated]
     pagination_class = PageNumberPagination
+    

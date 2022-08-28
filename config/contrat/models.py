@@ -24,3 +24,4 @@ class Contrat(models.Model):
         db_table = 'Contrat'
         verbose_name = 'Contrat'
         verbose_name_plural = 'Contrats'
+        

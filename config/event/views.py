@@ -2,11 +2,12 @@ from .serializers import EventSerializer
 from .models import Event
 from .permissions import IsSupportAuthenticated
 from comptes.permissions import IsAdminAuthenticated, IsSalesAuthenticated
+from .filters import EventFilter
 
 from rest_framework import viewsets, filters
 from rest_framework.pagination import PageNumberPagination
+
 from django_filters.rest_framework import DjangoFilterBackend
-from django.db.models import Q
 
 
 class EventList(viewsets.ModelViewSet):
@@ -14,8 +15,8 @@ class EventList(viewsets.ModelViewSet):
     permission_classes = [IsSalesAuthenticated|IsAdminAuthenticated|IsSupportAuthenticated]
     pagination_class = PageNumberPagination
     filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
-    filterset_fields = ('event_date',)
-    search_fields = ('client_id__last_name', 'client_id__email',)
+    filterset_class = EventFilter
+    search_fields = ('client_id__last_name', 'client_id__email', 'event_date',)
     ordering_fields = ('event_date', 'date_created')
 
     def get_queryset(self):
@@ -24,20 +25,3 @@ class EventList(viewsets.ModelViewSet):
         elif self.request.user.is_sales == True:
             return Event.objects.all()
         
- 
-
-
-# class EventListRestringed(viewsets.ModelViewSet):
-#     serializer_class = EventListSerializer
-#     permission_classes = [IsSupportAuthenticated]
-#     pagination_class = PageNumberPagination
-#     filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
-#     filterset_fields = ('event_date',)
-#     search_fields = ('client_id__last_name', 'client_id__email',)
-#     ordering_fields = ('event_date', 'date_created')
-
-#     def get_queryset(self):
-#         user = self.request.user
-
-#         queryset = queryset.filter(Q(event__support_contact_id__id=user))
-#         return queryset
