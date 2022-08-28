@@ -3,7 +3,7 @@ from .models import Contrat
 from comptes.models import Client
 
 from rest_framework import viewsets, filters
-from rest_framework.permissions import IsAuthenticated
+from comptes.permissions import IsAdminAuthenticated, IsSalesAuthenticated
 from rest_framework.pagination import PageNumberPagination
 from django_filters.rest_framework import DjangoFilterBackend
 
@@ -11,7 +11,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 class ContratList(viewsets.ModelViewSet):
     serializer_class = ContratSerializer
     queryset = Contrat.objects.all()
-    # permission_classes = [IsAuthenticated]
+    permission_classes = [IsAdminAuthenticated|IsSalesAuthenticated]
     pagination_class = PageNumberPagination
     filter_backends = (DjangoFilterBackend, filters.OrderingFilter, filters.SearchFilter)
     filterset_fields = ('date_created', 'amount',)

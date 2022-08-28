@@ -16,7 +16,6 @@ class UserAdmin(admin.ModelAdmin):
     ordering=('username','is_sales', 'is_support',)
     search_fields=("username", "first_name", "last_name", "email", "is_sales", "is_support")
     list_filter=('is_sales', 'is_support',)
-    exclude=('password',)
 
     def nom(self, obj):
         return obj.last_name.upper()

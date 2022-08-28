@@ -2,9 +2,9 @@ from django.urls import reverse
 from .models import User
 from rest_framework import status
 from rest_framework.test import APITestCase
+from rest_framework.test import RequestsClient
 
 class TestSetUp(APITestCase):
-
     def test_get_token(self):
         
         self.login_url = '/api/token/'
@@ -36,7 +36,8 @@ class TestAddNewUser(TestSetUp):
         data = {'username':'admin',
             'password':'superuser',
             'email':'contact_admin@contact.com',
-            'role':'SALES',}
+            'role':'SALES',
+            'id':'1',}
 
         response = self.client.post(
             self.login_url,
@@ -46,3 +47,5 @@ class TestAddNewUser(TestSetUp):
 
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(User.objects.all().count(), 1)
+        self.assertEqual(User.objects.get().username, 'admin')
+    

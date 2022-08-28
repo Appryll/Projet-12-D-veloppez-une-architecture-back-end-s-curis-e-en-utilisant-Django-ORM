@@ -18,7 +18,7 @@ class ClientFilter(FilterSet):
 class ClientList(viewsets.ModelViewSet):
     serializer_class = ClientSerializer
     queryset = Client.objects.all()
-    # permission_classes = [IsAdminAuthenticated|IsSalesAuthenticated]
+    permission_classes = [IsAdminAuthenticated|IsSalesAuthenticated]
     pagination_class = PageNumberPagination
     filter_backends = (DjangoFilterBackend, filters.OrderingFilter)
     ordering_fields = ('last_name', 'date_created')
@@ -27,5 +27,5 @@ class ClientList(viewsets.ModelViewSet):
 class UserList(viewsets.ModelViewSet):
     serializer_class = UserSerializer
     queryset = User.objects.all()
-    # permission_classes = [IsAdminAuthenticated]
+    permission_classes = [IsAdminAuthenticated]
     pagination_class = PageNumberPagination

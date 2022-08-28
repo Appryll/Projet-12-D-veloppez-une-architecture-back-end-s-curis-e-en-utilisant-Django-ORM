@@ -1,8 +1,8 @@
 from .serializers import EventSerializer
 from .models import Event
+from .permissions import IsSupportAuthenticated
 
 from rest_framework import viewsets, filters
-from rest_framework.permissions import IsAuthenticated
 from rest_framework.pagination import PageNumberPagination
 from django_filters.rest_framework import DjangoFilterBackend
 
@@ -10,7 +10,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 class EventList(viewsets.ModelViewSet):
     serializer_class = EventSerializer
     queryset = Event.objects.all()
-    # permission_classes = [IsAuthenticated]
+    permission_classes = [IsSupportAuthenticated]
     pagination_class = PageNumberPagination
     filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
     filterset_fields = ('event_date',)
