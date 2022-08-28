@@ -15,7 +15,7 @@ class UserSerializer(ModelSerializer):
         return make_password(value)
 
 class ClientSerializer(ModelSerializer):
-    sales_contact = UserSerializer()
+    #sales_contact = UserSerializer()
     class Meta:
         model = Client
         fields = ['id','first_name', 'last_name', 'email', 'phone', 'mobile', 'company_name', 'date_created', 

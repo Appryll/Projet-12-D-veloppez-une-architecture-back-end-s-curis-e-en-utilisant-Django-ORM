@@ -14,6 +14,5 @@ class IsSalesAuthenticated(BasePermission):
        
         return bool(request.user and 
                     request.user.is_authenticated and 
-                    request.user.is_sales and
-                    request.user == obj.sales_contact)
+                    request.user.is_sales)
         

@@ -3,8 +3,8 @@ from .models import Contrat
 from comptes.serializers import ClientSerializer, UserSerializer
  
 class ContratSerializer(ModelSerializer):
-    client_id = ClientSerializer()
-    sales_contact_id = UserSerializer()
+    # client_id = ClientSerializer()
+    # sales_contact_id = UserSerializer()
 
     class Meta:
         model = Contrat
