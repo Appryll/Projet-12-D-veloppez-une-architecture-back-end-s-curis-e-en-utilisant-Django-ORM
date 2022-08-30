@@ -4,7 +4,7 @@ from django.conf import settings
 
 class Contrat(models.Model):
     sales_contact_id = models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.PROTECT, verbose_name='Username Contact Commercial')
-    client_id = models.ForeignKey(to=Client, on_delete=models.CASCADE, related_name="client", verbose_name="Nom Prenom Client")
+    client_id = models.ForeignKey(to=Client, on_delete=models.PROTECT, related_name="client", verbose_name="Nom Prenom Client")
     date_created = models.DateTimeField(auto_now_add=True, verbose_name='Date de creation')
     date_updated = models.DateTimeField(auto_now_add=True, verbose_name='Date de modification')
     status_signee = models.BooleanField(default=False, verbose_name='Signee')

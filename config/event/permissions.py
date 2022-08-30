@@ -1,16 +1,30 @@
 from rest_framework.permissions import BasePermission
+from rest_framework.exceptions import PermissionDenied
 from .models import Event
-from rest_framework.generics import get_object_or_404
 
-class IsSupportAuthenticated(BasePermission):
+class IsSalesAuthenticated(BasePermission):
     def has_permission(self, request, obj):
-        #client = get_object_or_404(Client, id=view.kwargs.get('id'))
-        #nom_username = request.user.id
-        #exist = Event.objects.filter(support_contact_id__id=nom_username)
-        #print(exist.values())#queryset
+       
         return bool(request.user and 
                     request.user.is_authenticated and 
-                    request.user.is_support 
-                    #and exist
-                    )
-        
+                    request.user.is_sales)
+                    
+class PermissionSupport(BasePermission):
+    """
+    - Un accès en lecture seule à tous les événements.
+    - Un droit de modification/d'accès pour tous les événements dont SUPPORT est responsable.
+    """
+
+    def has_permission(self, request, *args, **kwargs):
+        if request.method == 'PUT':
+            return bool(request.user and 
+                    request.user.is_authenticated and 
+                    request.user.is_support)       
+        elif request.method == 'POST':
+            raise PermissionDenied("Vous n'êtes pas autorisé à créer un événement") 
+        elif request.method == 'GET':
+             eventlisted = Event.objects.all()
+             return eventlisted 
+        else: 
+            raise PermissionDenied("Vous n'êtes pas autorisé à supprimer un événement.") 
+            

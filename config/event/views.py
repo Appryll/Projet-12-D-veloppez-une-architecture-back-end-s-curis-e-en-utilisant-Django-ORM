@@ -1,7 +1,7 @@
 from .serializers import EventSerializer
 from .models import Event
-from .permissions import IsSupportAuthenticated
-from comptes.permissions import IsAdminAuthenticated, IsSalesAuthenticated
+from .permissions import PermissionSupport, IsSalesAuthenticated
+from comptes.permissions import IsAdminAuthenticated
 from .filters import EventFilter
 
 from rest_framework import viewsets, filters
@@ -12,7 +12,8 @@ from django_filters.rest_framework import DjangoFilterBackend
 
 class EventList(viewsets.ModelViewSet):
     serializer_class = EventSerializer
-    permission_classes = [IsSalesAuthenticated|IsAdminAuthenticated|IsSupportAuthenticated]
+    queryset = Event.objects.all()
+    permission_classes = [IsSalesAuthenticated|IsAdminAuthenticated|PermissionSupport]
     pagination_class = PageNumberPagination
     filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
     filterset_class = EventFilter
@@ -20,8 +21,7 @@ class EventList(viewsets.ModelViewSet):
     ordering_fields = ('event_date', 'date_created')
 
     def get_queryset(self):
-        if self.action != 'destroy' and self.request.user.is_support == True:
+        if self.action != 'list' and self.request.user.is_support == True:
             return Event.objects.filter(support_contact_id=self.request.user)
-        elif self.request.user.is_sales == True:
+        elif self.action == 'list' and self.request.user.is_support == True or self.request.user.is_sales == True:
             return Event.objects.all()
-        
