@@ -1,6 +1,6 @@
 # Projet 12 - Développez une architecture back-end sécurisée en utilisant Django ORM - OpenClassrooms 
 
-Cet application permet de gestioner la relation client (CRM) de l'entreprise *Epic Events*, qui effectue le suivi de tous les clients et événements.
+Cette application permet de gestioner la relation client (CRM) de l'entreprise *Epic Events*, qui effectue le suivi de tous les clients et événements.
 
 ## Mise en place du projet
 
