@@ -1,6 +1,7 @@
 from rest_framework.permissions import BasePermission
 from rest_framework.exceptions import PermissionDenied
 from .models import Event
+from contrat.models import Contrat
 
 class IsSalesAuthenticated(BasePermission):
     def has_permission(self, request, obj):
@@ -12,14 +13,18 @@ class IsSalesAuthenticated(BasePermission):
 class PermissionSupport(BasePermission):
     """
     - Un accès en lecture seule à tous les événements.
-    - Un droit de modification/d'accès pour tous les événements dont SUPPORT est responsable.
+    - Un droit de modification/d'accès pour tous les événements dont SUPPORT est responsable, jusqu'à ce qu'il soit terminé.
     """
 
     def has_permission(self, request, *args, **kwargs):
         if request.method == 'PUT':
-            return bool(request.user and 
-                    request.user.is_authenticated and 
-                    request.user.is_support)       
+            event = Event()
+            if event.event_perm_modification == False:
+                    return bool(request.user and 
+                            request.user.is_authenticated and 
+                            request.user.is_support)
+            else:
+                raise PermissionDenied("Vous ne pouvez pas modifier un événement terminé")   
         elif request.method == 'POST':
             raise PermissionDenied("Vous n'êtes pas autorisé à créer un événement") 
         elif request.method == 'GET':
