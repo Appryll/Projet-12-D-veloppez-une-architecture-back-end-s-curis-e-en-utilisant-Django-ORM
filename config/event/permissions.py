@@ -19,10 +19,15 @@ class PermissionSupport(BasePermission):
     def has_permission(self, request, *args, **kwargs):
         if request.method == 'PUT':
             event = Event()
+            contrat = Contrat()
             if event.event_perm_modification == False:
-                    return bool(request.user and 
-                            request.user.is_authenticated and 
-                            request.user.is_support)
+                if request.user and request.user.is_authenticated and request.user.is_support:
+                    return True
+                    # return bool(request.user and 
+                    #         request.user.is_authenticated and 
+                    #         request.user.is_support)
+                if request.user.is_sales and event.client_id == contrat.client_id:
+                    return True
             else:
                 raise PermissionDenied("Vous ne pouvez pas modifier un événement terminé")   
         elif request.method == 'POST':
