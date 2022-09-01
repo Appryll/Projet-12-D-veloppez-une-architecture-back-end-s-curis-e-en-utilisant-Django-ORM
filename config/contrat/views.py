@@ -23,8 +23,9 @@ class ContratList(viewsets.ModelViewSet):
     
     def get_queryset(self):
         """
-        - Admin, Sales, Support : Un accès en lecture seule à tous les clients.
-        - Sales : accéder à ses clients par filtrage.
+        - Admin, Sales, Support : Un accès en lecture à tous les events.
+        - Sales : accéder à ses contrats par filtrage-> CRUD
+        - admin : accéder à tous les contrats-> CRUD
         """
         if self.request.user.is_authenticated == True:
             if self.action != 'list' and self.request.user.is_sales == True:
