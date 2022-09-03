@@ -1,5 +1,6 @@
 from .serializers import EventSerializer
 from .models import Event
+from contrat.models import Contrat
 from .permissions import PermissionSupport, IsSalesAuthenticated
 from comptes.permissions import IsAdminAuthenticated
 from .filters import EventFilter
@@ -7,6 +8,8 @@ from .filters import EventFilter
 from rest_framework import viewsets, filters
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.serializers import ValidationError
+from django.shortcuts import get_object_or_404
+from rest_framework.response import Response
 
 from django_filters.rest_framework import DjangoFilterBackend
 
@@ -40,3 +43,18 @@ class EventList(viewsets.ModelViewSet):
         else: 
             raise ValidationError("detail: Authentication credentials were not provided.")
     
+    def create(self, request): 
+        """
+        - empêche la création d'un événement si le contrat n'est pas signé
+        """     
+        data = request.data.copy()
+        serialized_data = self.serializer_class(data=data)
+        serialized_data.is_valid(raise_exception=True)     
+        contrat = get_object_or_404(Contrat, pk=serialized_data.data.get('contrat_id'))
+        if contrat.status_signee == True:    
+            serialized_data = self.serializer_class(data=data)
+            serialized_data.is_valid(raise_exception=True)
+            serialized_data.save()
+            return Response(serialized_data.data)
+        else:
+            raise ValidationError("Vous ne pouvez pas creér un événement si le contrat n\'est pas signé.")
