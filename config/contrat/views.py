@@ -1,12 +1,14 @@
 from .serializers import ContratSerializer
 from .models import Contrat
+from comptes.models import Client
 from .filters import ContratFilter
 from comptes.permissions import IsAdminAuthenticated, PermissionSales
 
 from rest_framework import viewsets, filters
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.serializers import ValidationError
-
+from django.shortcuts import get_object_or_404
+from rest_framework.response import Response
 
 from django_filters.rest_framework import DjangoFilterBackend
 
@@ -37,3 +39,19 @@ class ContratList(viewsets.ModelViewSet):
         else: 
             raise ValidationError("detail: Authentication credentials were not provided.")
     
+    def create(self, request): 
+        """
+        - empêche la création d'un contrat si le client n'est pas confirmé
+        """     
+        data = request.data.copy()
+        serialized_data = self.serializer_class(data=data)
+        serialized_data.is_valid(raise_exception=True)     
+        client = get_object_or_404(Client, pk=serialized_data.data.get('client_id'))
+        if client.client_confirmed == True:    
+            serialized_data = self.serializer_class(data=data)
+            serialized_data.is_valid(raise_exception=True)
+            serialized_data.validated_data["sales_contact_id"] = request.user
+            serialized_data.save()
+            return Response(serialized_data.data)
+        else:
+            raise ValidationError("Vous ne pouvez pas creér un contrat si le client n\'est pas confirmé.")
