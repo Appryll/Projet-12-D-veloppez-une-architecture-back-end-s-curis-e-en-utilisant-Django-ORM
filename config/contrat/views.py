@@ -7,8 +7,8 @@ from rest_framework import viewsets, filters
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.serializers import ValidationError
 
-from django_filters.rest_framework import DjangoFilterBackend
 
+from django_filters.rest_framework import DjangoFilterBackend
 
 class ContratList(viewsets.ModelViewSet):
     serializer_class = ContratSerializer
@@ -19,7 +19,6 @@ class ContratList(viewsets.ModelViewSet):
     filterset_class = ContratFilter
     search_fields = ('client_id__last_name', 'client_id__email', 'amount', 'date_created')
     ordering_fields = ('date_created', 'amount',)
-
     
     def get_queryset(self):
         """
@@ -37,4 +36,4 @@ class ContratList(viewsets.ModelViewSet):
                 return Contrat.objects.all()
         else: 
             raise ValidationError("detail: Authentication credentials were not provided.")
-            
+    

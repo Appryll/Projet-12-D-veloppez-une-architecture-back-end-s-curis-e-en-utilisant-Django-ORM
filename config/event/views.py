@@ -39,3 +39,4 @@ class EventList(viewsets.ModelViewSet):
                 return Event.objects.all()
         else: 
             raise ValidationError("detail: Authentication credentials were not provided.")
+    

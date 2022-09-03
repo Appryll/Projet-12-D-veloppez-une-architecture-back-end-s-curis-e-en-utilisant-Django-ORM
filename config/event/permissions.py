@@ -28,8 +28,7 @@ class PermissionSupport(BasePermission):
         elif request.method == 'POST':
             raise PermissionDenied("Vous n'êtes pas autorisé à créer un événement") 
         elif request.method == 'GET':
-             eventlisted = Event.objects.all()
-             return eventlisted 
+            eventlisted = Event.objects.all()
+            return eventlisted 
         else: 
             raise PermissionDenied("Vous n'êtes pas autorisé à supprimer un événement.") 
-            

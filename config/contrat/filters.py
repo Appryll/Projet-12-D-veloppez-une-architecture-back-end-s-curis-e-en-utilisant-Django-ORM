@@ -13,3 +13,4 @@ class ContratFilter(django_filters.FilterSet):
         return qs.filter(
             Q(client_id__last_name__icontains=value) | Q(client_id__email__icontains=value)
         )
+        
